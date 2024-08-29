@@ -1,6 +1,4 @@
-package com.coursecraft.controllers;
-
-import com.coursecraft.utils.UserDispatcher;
+package com.coursecraft.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -10,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.coursecraft.util.UserDispatcher;
 
 @Controller
 public class HomeController {

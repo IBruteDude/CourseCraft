@@ -1,4 +1,4 @@
-package com.coursecraft.entities;
+package com.coursecraft.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,8 +30,13 @@ public class UserSession {
 		this.sessionUuid = UUID.randomUUID();
 	}
 
+	public UserSession(User user, String sessionUuid) {
+		this.user = user;
+		this.sessionUuid = UUID.fromString(sessionUuid);
+	}
+
 	public String toString() {
-		return (new com.coursecraft.utils.ToStringGenerator(this.getClass())).fieldListString();
+		return "UserSession(id=" + id + ", sessionUuid=" + sessionUuid +", user_id="+user.getId()+")";
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.coursecraft.utils;
+package com.coursecraft.util;
 
 import java.lang.reflect.Field;
 import java.util.List;

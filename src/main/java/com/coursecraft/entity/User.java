@@ -1,19 +1,33 @@
-package com.coursecraft.entities;
+package com.coursecraft.entity;
 
 import java.util.Set;
+
+import com.coursecraft.dto.SignupDto;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
+@ToString
 @NoArgsConstructor
 public class User {
-    public User(String email, String password) {
+
+    public User(String email, String password, String firstName, String lastName, String country) {
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.residenceCountry = Country.valueOf(country);
+    }
+
+    public User(SignupDto signupDto) {
+        new User(signupDto.email, signupDto.password, signupDto.firstName, signupDto.lastName, signupDto.country);
     }
 
     public static enum Role {
@@ -25,7 +39,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    protected Integer id;
 
     @Column(name = "email", nullable = false, unique = true)
     protected String email;
@@ -42,20 +56,20 @@ public class User {
     @Column(name = "last_name")
     protected String lastName;
 
+    @Enumerated
+    protected Country residenceCountry;
+
     @Column(name = "profile_picture_uri")
     protected String profilePictureUri;
 
     // - Contact Information
     // - associated Cart
-    // - Residence Country
 
-
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<UserSession> userSessions;
 
-    public String toString() {
-        return (new com.coursecraft.utils.ToStringGenerator(this.getClass())).fieldListString();
-    }
+    // public String toString() {
+    //     return (new com.coursecraft.util.ToStringGenerator(this.getClass())).fieldListString();
+    // }
 
 }

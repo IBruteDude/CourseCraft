@@ -1,11 +1,11 @@
-package com.coursecraft.utils;
+package com.coursecraft.util;
 
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
+import java.util.Optional;
 
-import com.coursecraft.daos.AppDao;
-import com.coursecraft.entities.User;
+import com.coursecraft.dao.AppDao;
+import com.coursecraft.entity.User;
 
 @Component
 public class UserDispatcher<T> {
@@ -23,16 +23,15 @@ public class UserDispatcher<T> {
 	private T notFoundChoice;
 
 	public UserDispatcher<T> sessionId(String sessionId) {
-		try {
-			if (sessionId != null) {
-				User user = appDao.findBySessionId(UUID.fromString(sessionId));
-				this.userType = user.getRole();
-			} else {
+		if (sessionId != null) {
+			Optional<User> user = appDao.findBySessionId(sessionId);
+
+			if (user.isPresent())
+				this.userType = user.get().getRole();
+			else
 				this.userType = User.Role.NOT_REGISTERED;
-			}
-		} catch (jakarta.persistence.NoResultException e) {
+		} else
 			this.userType = User.Role.NOT_REGISTERED;
-		}
 
 		return this;
 	}
