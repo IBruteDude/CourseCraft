@@ -5,7 +5,6 @@ import java.util.Set;
 import com.coursecraft.dto.SignupDto;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -27,7 +26,8 @@ public class User {
     }
 
     public User(SignupDto signupDto) {
-        new User(signupDto.email, signupDto.password, signupDto.firstName, signupDto.lastName, signupDto.country);
+        this(signupDto.getEmail(), signupDto.getPassword(), signupDto.getFirstName(), signupDto.getLastName(),
+                signupDto.getCountry());
     }
 
     public static enum Role {
@@ -69,7 +69,8 @@ public class User {
     protected Set<UserSession> userSessions;
 
     // public String toString() {
-    //     return (new com.coursecraft.util.ToStringGenerator(this.getClass())).fieldListString();
+    // return (new
+    // com.coursecraft.util.ToStringGenerator(this.getClass())).fieldListString();
     // }
 
 }

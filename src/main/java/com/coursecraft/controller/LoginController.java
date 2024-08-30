@@ -2,7 +2,6 @@ package com.coursecraft.controller;
 
 import com.coursecraft.dao.AppDao;
 import com.coursecraft.dto.LoginDto;
-import com.coursecraft.dto.SignupDto;
 import com.coursecraft.entity.User;
 import com.coursecraft.entity.UserSession;
 
@@ -59,7 +58,7 @@ public class LoginController {
 				.path("/");
 
 		String cookieValue = (savePassword != "on") ? cookie.maxAge(Duration.ofDays(365)).build().toString()
-													: cookie.build().toString();
+				: cookie.build().toString();
 
 		return ResponseEntity
 				.status(HttpStatus.SEE_OTHER)

@@ -33,7 +33,8 @@ public class CoursesRestController {
 	public ResponseEntity<?> recommendations(
 			@CookieValue(name = "sessionId", required = false) String sessionId,
 			@RequestBody RecommendationsDto recommendationsParams) {
-		return ResponseEntity.ok(engine.getCourseRecommendations(appDao.findBySessionId(sessionId), recommendationsParams, 12));
+		return ResponseEntity
+				.ok(engine.getCourseRecommendations(appDao.findBySessionId(sessionId), recommendationsParams, 12));
 	}
 
 	@PostMapping("/api/v1/courses/pending/{courseId}/reject")

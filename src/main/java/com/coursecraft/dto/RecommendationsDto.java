@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class RecommendationsDto {
 
-	private	String sortKey;
+	private String sortKey;
 	private Map<String, ?> filters;
 
 }

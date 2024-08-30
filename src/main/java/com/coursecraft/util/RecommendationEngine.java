@@ -16,7 +16,8 @@ public class RecommendationEngine {
 	@Autowired
 	private AppDao appDao;
 
-	public List<Course> getCourseRecommendations(Optional<User> student, RecommendationsDto recommendationsParams, int limit) {
+	public List<Course> getCourseRecommendations(Optional<User> student, RecommendationsDto recommendationsParams,
+			int limit) {
 		TypedQuery<Course> query = appDao.getEntityManager()
 				.createQuery("SELECT e FROM Course e ORDER BY FUNCTION('RAND')", Course.class);
 

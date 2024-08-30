@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Instructor extends User {
 
-
 	public Instructor(String email, String password, String firstName, String lastName, String country) {
 		super(email, password, firstName, lastName, country);
 		role = User.Role.INSTRUCTOR;

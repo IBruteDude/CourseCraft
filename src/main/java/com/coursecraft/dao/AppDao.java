@@ -2,7 +2,6 @@ package com.coursecraft.dao;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.coursecraft.entity.User;
 
@@ -26,6 +25,6 @@ public interface AppDao {
 
 	public void delete(Class<?> entityClass, int id);
 
-    public void truncateTable(String tableName);
+	public void truncateTable(String tableName);
 
 }

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.coursecraft.util.UserDispatcher;
 
-
 @Controller
 public class ProfileController {
 
@@ -33,64 +32,3 @@ public class ProfileController {
 	}
 
 }
-
-/*
-
-	@Mapping("")
-	public String (
-	@CookieValue(name = "sessionId", required = false) String sessionId,
-	@RequestBody String body) {
-	return "";
-	}
-
-GET url: /courses/{courseName} | cookies: sessionId
-
-GET url: /api/v1/courses/search | cookie: sessionId? | json: { "searchQuery": string }
-
-GET url: /api/v1/courses/recommendations | cookie: sessionId? | json: { "filters"?: { (<filterKey>: Value)* }, "sortBy"?: string }
-
-POST url: /api/v1/courses/<id>/cart | cookies: sessionId
-
-POST url: /api/v1/courses/<id>/cart/checkout | cookies: sessionId
-
-GET url: /user/courses | cookies: sessionId
-
-POST url: /api/v1/courses/pending/<id>/reject | cookies: sessionId
-
-POST url: /api/v1/courses/pending/<id>/accept | cookies: sessionId
-
-POST url: /api/v1/courses/pending/<id>/edit | cookies: sessionId
-
-GET url: /user/courses | cookies: sessionId
-
-GET url: /user/courses | cookies: sessionId
-
-GET url: /api/v1/courses/<id>/save | cookies: sessionId
-
-GET url: /user/courses | cookies: sessionId?
-
-GET url: /user/courses | cookies: sessionId?
-
-GET url: /user/cart | cookies: sessionId?
-
-DELETE url: /api/v1/course/<id> | cookies: sessionId?
-
-PUT url: /api/v1/user/profile
-
-GET url: /user/courses/create
-
-GET url: /user/courses/<courseName>/edit
-
-POST url: /user/courses/create (resp -> redirect on success, json on failure)
-
-POST url: /api/v1/user/courses/<id>/modules/ | cookies: sessionId? | json: { "title" : <module title> }
-
-DELETE url: /api/v1/user/courses/<id>/modules/<id> | cookies: sessionId?
-
-POST url: /api/v1/user/courses/<id>/modules/<id>/lesson | cookies: sessionId? | json: { "title" : <lesson title> }
-
-PUT url: /api/v1/user/courses/<id>/modules/<id>/lesson/<id> | cookies: sessionId? | json: { <lessonObject> }
-
-DELETE url: /api/v1/user/courses/<id>/modules/<id>/lesson/<id> | cookies: sessionId?
-
-*/

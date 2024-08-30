@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 public class ToStringGenerator {
+
 	private List<Field> fieldList;
 	private Class<?> storedClass;
 
@@ -20,4 +21,5 @@ public class ToStringGenerator {
 			return field.toGenericString();
 		}).toList().toString();
 	}
+
 }

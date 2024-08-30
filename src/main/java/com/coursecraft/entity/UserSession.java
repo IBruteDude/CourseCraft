@@ -8,21 +8,21 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 
 @Entity
-@Table(name="user_session")
+@Table(name = "user_session")
 @Data
 @NoArgsConstructor
 public class UserSession {
 
 	@Id
-	@Column(name="id", nullable = false)
+	@Column(name = "id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
 
-	@Column(name="session_uuid", nullable = false)
+	@Column(name = "session_uuid", nullable = false)
 	protected UUID sessionUuid;
 
 	@ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	protected User user;
 
 	public UserSession(User user) {
@@ -36,7 +36,7 @@ public class UserSession {
 	}
 
 	public String toString() {
-		return "UserSession(id=" + id + ", sessionUuid=" + sessionUuid +", user_id="+user.getId()+")";
+		return "UserSession(id=" + id + ", sessionUuid=" + sessionUuid + ", user_id=" + user.getId() + ")";
 	}
 
 }

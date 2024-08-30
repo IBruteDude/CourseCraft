@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 
@@ -51,9 +50,6 @@ public class AppDaoImpl implements AppDao {
 
 	@Override
 	public <T> List<T> queryWith(Class<T> entityClass, String key, Object value, int limit) {
-		// TypedQuery<T> query = entityManager.createQuery("FROM User WHERE "+key+"=:value", entityClass);
-		// query.setParameter("value", value);
-
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(entityClass);
 		Root<T> root = cq.from(entityClass);
@@ -93,8 +89,8 @@ public class AppDaoImpl implements AppDao {
 	}
 
 	@Transactional
-    public void truncateTable(String tableName) {
-        entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
-    }
+	public void truncateTable(String tableName) {
+		entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
+	}
 
 }

@@ -6,18 +6,11 @@ import com.coursecraft.entity.Admin;
 import com.coursecraft.entity.Country;
 import com.coursecraft.entity.Instructor;
 import com.coursecraft.entity.Student;
-import com.coursecraft.entity.User;
-import com.coursecraft.entity.UserSession;
 import com.coursecraft.entity.User.Role;
 
-import java.io.IOException;
 import java.util.*;
-import java.time.Duration;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.MergedAnnotation.Adapt;
 import org.springframework.http.*;
-import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,8 +56,7 @@ public class SignupController {
 	}
 
 	private boolean handleSignUp(SignupDto signupDto) {
-		System.out.println(signupDto);
-		return null != appDao.save(switch (Role.valueOf(signupDto.role)) {
+		return null != appDao.save(switch (Role.valueOf(signupDto.getRole())) {
 			case Role.ADMIN -> new Admin(signupDto);
 			case Role.STUDENT -> new Student(signupDto);
 			case Role.INSTRUCTOR -> new Instructor(signupDto);

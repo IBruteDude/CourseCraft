@@ -1,8 +1,5 @@
 package com.coursecraft.dto;
 
-import com.coursecraft.entity.Country;
-import com.coursecraft.entity.User.Role;
-
 import jakarta.validation.constraints.*;
 import lombok.*;
 

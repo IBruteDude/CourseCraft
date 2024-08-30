@@ -89,4 +89,5 @@ public class UserDispatcher<T> {
 			super("No handler for " + role + " case was found!");
 		}
 	}
+
 }
