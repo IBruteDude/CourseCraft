@@ -3,8 +3,6 @@ package com.coursecraft.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @ToString
 public class SignupDto {

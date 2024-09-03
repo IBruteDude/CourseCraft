@@ -1,39 +1,45 @@
 package com.coursecraft.controller;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.coursecraft.util.UserDispatcher;
 
-@Controller
+@RestController
 public class HomeController {
 
 	@Autowired
 	private UserDispatcher<String> userDispatcher;
 
 	@GetMapping("/")
-	public void root(@Autowired HttpServletResponse response) throws IOException {
-		response.sendRedirect("/dashboard");
+	public View root() throws IOException {
+		return new RedirectView("/dashboard");
 	}
 
 	@GetMapping("/dashboard")
-	public String dashboard(@CookieValue(name = "sessionId", required = false) String sessionId) {
+	public ModelAndView dashboardGetter(
+			@CookieValue(required = false) String adminSessionId,
+			@CookieValue(required = false) String instructorSessionId,
+			@CookieValue(required = false) String studentSessionId) {
 		try {
-			return userDispatcher
-					.sessionId(sessionId)
+			return new ModelAndView(userDispatcher
+					.adminSessionId(adminSessionId)
+					.instructorSessionId(instructorSessionId)
+					.studentSessionId(studentSessionId)
 					.admin("/admin/dashboard.html")
 					.instructor("/instructor/dashboard.html")
 					.student("/student/dashboard.html")
 					.notFound("redirect:/login")
-					.select();
+					.select());
 		} catch (jakarta.persistence.NoResultException e) {
-			return "/error";
+			return new ModelAndView("/not_found.html", "resource", "user");
 		}
 	}
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${course.name}"></title>
+</head>
+
+<body>
+	<h2 th:text="{course.title}"></h2>
+	<img th:src="${course.coursePictureUri}">
+	<h3>Description: </h3>
+	<div th:text="{course.description}"></div>
+	<h3>Category: </h3>
+	<div th:text="{course.category}"></div>
+	<h3>Language: </h3>
+	<div th:text="{course.language}"></div>
+	<h3>Price: </h3>
+	<div th:text="{course.price}"></div>
+</body>
+
+</html>

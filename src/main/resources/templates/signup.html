@@ -4,75 +4,35 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>CourseCraft - Signup</title>
 </head>
 
 <body>
 	<center>
-		<form id="signupForm">
+		<form action="/signup" method="post" name="signupForm">
 			<div>
-				First Name: <input type="text" id="firstName" placeholder="Ex: John">
-				Last Name: <input type="text" id="lastName" placeholder="Ex: Doe">
+				First Name: <input type="text" name="firstName" placeholder="Ex: John">
+				Last Name: <input type="text" name="lastName" placeholder="Ex: Doe">
 				<label for="countries">Country: </label>
-				<select id="countries">
+				<select id="countries" name="country">
 					<option value="" disabled selected></option>
 					<option th:each="country : ${countries}" th:value="${country.alpha3Code}"
 						th:text="${country.countryName}"></option>
 				</select>
 			</div>
 			<div>
-				Email: <input type="email" id="email" placeholder="Ex: johndoe@example.com">
-				Password: <input type="password" id="password">
+				Email: <input type="email" name="email" placeholder="Ex: johndoe@example.com">
+				Password: <input type="password" name="password">
 				<label for="role">Role: </label>
-				<select id="role">
+				<select id="countries" name="role">
 					<option value="" disabled selected></option>
 					<option value="STUDENT">Student</option>
 					<option value="INSTRUCTOR">Instructor</option>
 					<option value="ADMIN">Admin</option>
 				</select>
 			</div>
-			<h6> <input type="checkbox" id="savePassword"></h6>
 			<button type="submit">Submit</button>
 		</form>
-
-		<script>
-			document.getElementById('signupForm').addEventListener('submit', function (event) {
-				event.preventDefault();
-
-				const data = {
-					firstName: document.getElementById('firstName').value,
-					lastName: document.getElementById('lastName').value,
-					country: document.getElementById('countries').value,
-					email: document.getElementById('email').value,
-					password: document.getElementById('password').value,
-					role: document.getElementById('role').value,
-					savePassword: document.getElementById('savePassword').checked
-				};
-
-				fetch('/signup', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(data)
-				})
-					.then(response => {
-						if (response.ok) {
-							return response.json(); // Assuming the response is JSON
-						}
-						throw new Error('Network response was not ok.');
-					})
-					.then(data => {
-						console.log('Success:', data);
-						// Handle success, like showing a success message
-					})
-					.catch(error => {
-						console.error('Error:', error);
-						// Handle errors, like showing an error message
-					});
-			});
-		</script>
-
 	</center>
 </body>
 

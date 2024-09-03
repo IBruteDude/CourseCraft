@@ -3,6 +3,9 @@ package com.coursecraft.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -21,17 +24,25 @@ public class UserSession {
 	@Column(name = "session_uuid", nullable = false)
 	protected UUID sessionUuid;
 
+	@Column(name = "expiry_date", nullable = false)
+	protected LocalDateTime expiryDate;
+
+	@Column(name = "expired", nullable = false)
+	protected boolean expired;
+
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	protected User user;
 
-	public UserSession(User user) {
-		this.user = user;
-		this.sessionUuid = UUID.randomUUID();
+	public UserSession(User user, int expiry) {
+		this(user, expiry, UUID.randomUUID().toString());
 	}
 
-	public UserSession(User user, String sessionUuid) {
+	public UserSession(User user, int expiry, String sessionUuid) {
 		this.user = user;
+		this.expired = false;
+		this.expiryDate = LocalDateTime.ofEpochSecond(Instant.now().plusSeconds(expiry).getEpochSecond(), 0,
+				ZoneOffset.UTC);
 		this.sessionUuid = UUID.fromString(sessionUuid);
 	}
 

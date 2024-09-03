@@ -13,6 +13,8 @@ public interface AppDao {
 
 	public <T> T save(T entity);
 
+	public <T> T update(T entity);
+
 	public <T> T findById(Class<T> entityClass, int id);
 
 	public Optional<User> findBySessionId(String sessionId);

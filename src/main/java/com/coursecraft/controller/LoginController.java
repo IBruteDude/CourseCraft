@@ -5,15 +5,15 @@ import com.coursecraft.dto.LoginDto;
 import com.coursecraft.entity.User;
 import com.coursecraft.entity.UserSession;
 
-import java.io.IOException;
-import java.util.List;
-import java.time.Duration;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
-import org.springframework.http.ResponseCookie.ResponseCookieBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class LoginController {
@@ -26,45 +26,53 @@ public class LoginController {
 		return "/login.html";
 	}
 
-	@PostMapping(path = "/login")
-	public ResponseEntity<?> handleLogin(
-			@RequestParam(name = "email") String email,
-			@RequestParam(name = "password") String password,
-			@RequestParam(name = "savePassword", required = false) String savePassword) throws IOException {
+	@PostMapping(path = "/login", consumes = "application/x-www-form-urlencoded", produces = "text/html")
+	public View login(
+			@Autowired HttpServletResponse response,
+			@RequestParam String email,
+			@RequestParam String password,
+			@RequestParam(required = false) String savePassword) {
 		LoginDto loginInfo = new LoginDto(email, password);
-		List<User> users = appDao.queryWith(User.class, "email", loginInfo.getEmail(), 1);
+		List<User> users = appDao.queryWith(User.class, "email", loginInfo.email, 1);
 
 		if (users.isEmpty())
-			return ResponseEntity
-					.status(HttpStatus.SEE_OTHER)
-					.header(HttpHeaders.LOCATION, "/login?success=false")
-					.build();
+			return new RedirectView("/login?success=false");
 
 		User user = users.getFirst();
 
-		if (!loginInfo.getPassword().equals(user.getPassword()))
-			return ResponseEntity
-					.status(HttpStatus.SEE_OTHER)
-					.header(HttpHeaders.LOCATION, "/login?success=false")
-					.build();
+		if (!loginInfo.password.equals(user.getPassword()))
+			return new RedirectView("/login?success=false");
 
-		UserSession session = new UserSession(user);
+		int maxAge = ((savePassword == "on") ? 365 : 1) * 24 * 60 * 60;
+		UserSession session = new UserSession(user, maxAge);
 
 		appDao.save(session);
 
-		ResponseCookieBuilder cookie = ResponseCookie.from("sessionId", session.getSessionUuid().toString())
-				.httpOnly(true)
-				.secure(true)
-				.path("/");
+		Cookie cookie = new Cookie(user.getRole().toString().toLowerCase() + "SessionId",
+				session.getSessionUuid().toString());
+		cookie.setSecure(true);
+		cookie.setPath("/");
+		cookie.setMaxAge(maxAge);
+		response.addCookie(cookie);
+		return new RedirectView("/dashboard");
+	}
 
-		String cookieValue = (savePassword != "on") ? cookie.maxAge(Duration.ofDays(365)).build().toString()
-				: cookie.build().toString();
-
-		return ResponseEntity
-				.status(HttpStatus.SEE_OTHER)
-				.header(HttpHeaders.LOCATION, "/dashboard")
-				.header(HttpHeaders.SET_COOKIE, cookieValue)
-				.build();
+	@PostMapping(path = "/logout")
+	public View logout(
+			@CookieValue(required = false) String adminSessionId,
+			@CookieValue(required = false) String instructorSessionId,
+			@CookieValue(required = false) String studentSessionId) {
+		List<UserSession> adminSessions = appDao.queryWith(UserSession.class, "sessionUuid", adminSessionId, 1);
+		if (!adminSessions.isEmpty())
+			adminSessions.getFirst().setExpired(true);
+		List<UserSession> instructorSessions = appDao.queryWith(UserSession.class, "sessionUuid", instructorSessionId,
+				1);
+		if (!instructorSessions.isEmpty())
+			instructorSessions.getFirst().setExpired(true);
+		List<UserSession> studentSessions = appDao.queryWith(UserSession.class, "sessionUuid", studentSessionId, 1);
+		if (!studentSessions.isEmpty())
+			studentSessions.getFirst().setExpired(true);
+		return new RedirectView("/login");
 	}
 
 }

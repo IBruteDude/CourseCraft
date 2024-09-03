@@ -2,6 +2,7 @@ package com.coursecraft.entity;
 
 import java.util.Set;
 
+import com.coursecraft.dto.ProfileDto;
 import com.coursecraft.dto.SignupDto;
 
 import jakarta.persistence.*;
@@ -17,60 +18,63 @@ import lombok.ToString;
 @NoArgsConstructor
 public class User {
 
-    public User(String email, String password, String firstName, String lastName, String country) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.residenceCountry = Country.valueOf(country);
-    }
+	public User(String email, String password, String firstName, String lastName, String country) {
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.country = Country.valueOf(country);
+	}
 
-    public User(SignupDto signupDto) {
-        this(signupDto.getEmail(), signupDto.getPassword(), signupDto.getFirstName(), signupDto.getLastName(),
-                signupDto.getCountry());
-    }
+	public User(SignupDto signupDto) {
+		this(signupDto.email, signupDto.password, signupDto.firstName, signupDto.lastName, signupDto.country);
+	}
 
-    public static enum Role {
-        ADMIN,
-        INSTRUCTOR,
-        STUDENT,
-        NOT_REGISTERED
-    }
+	public static enum Role {
+		ADMIN,
+		INSTRUCTOR,
+		STUDENT,
+		NOT_REGISTERED
+	}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Integer id;
 
-    @Column(name = "email", nullable = false, unique = true)
-    protected String email;
+	@Column(name = "email", nullable = false, unique = true)
+	protected String email;
 
-    @Column(name = "password", nullable = false)
-    protected String password;
+	@Column(name = "password", nullable = false)
+	protected String password;
 
-    @Enumerated
-    protected Role role;
+	@Enumerated
+	protected Role role;
 
-    @Column(name = "first_name")
-    protected String firstName;
+	@Column(name = "first_name")
+	protected String firstName;
 
-    @Column(name = "last_name")
-    protected String lastName;
+	@Column(name = "last_name")
+	protected String lastName;
 
-    @Enumerated
-    protected Country residenceCountry;
+	@Enumerated
+	protected Country country;
 
-    @Column(name = "profile_picture_uri")
-    protected String profilePictureUri;
+	@Column(name = "profile_picture_uri")
+	protected String profilePictureUri;
 
-    // - Contact Information
-    // - associated Cart
+	// - Contact Information
+	// - associated Cart
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    protected Set<UserSession> userSessions;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	protected Set<UserSession> userSessions;
 
-    // public String toString() {
-    // return (new
-    // com.coursecraft.util.ToStringGenerator(this.getClass())).fieldListString();
-    // }
+	public User update(ProfileDto profileDto) {
+		this.firstName = profileDto.firstName;
+		this.lastName = profileDto.lastName;
+		this.password = profileDto.password;
+		this.country = Country.valueOf(profileDto.country);
+		this.profilePictureUri = profileDto.profilePictureUri;
+		return this;
+	}
 
 }

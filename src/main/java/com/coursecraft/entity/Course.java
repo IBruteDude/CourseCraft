@@ -33,8 +33,8 @@ public class Course {
 
 	public Course(String courseName, String courseTitle, String description, String category, Double price,
 			Language language, Instructor instructor, @Nullable URI coursePictureUri) {
-		this.courseName = courseName;
-		this.courseTitle = courseTitle;
+		this.name = courseName;
+		this.title = courseTitle;
 		this.description = description;
 		this.category = category;
 		this.price = price;
@@ -53,11 +53,11 @@ public class Course {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 
-	@Column(name = "course_name", nullable = false)
-	protected String courseName;
+	@Column(name = "name", nullable = false)
+	protected String name;
 
-	@Column(name = "course_title", nullable = false)
-	protected String courseTitle;
+	@Column(name = "title", nullable = false)
+	protected String title;
 
 	@Column(name = "description", nullable = false)
 	protected String description;

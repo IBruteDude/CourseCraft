@@ -93,4 +93,11 @@ public class AppDaoImpl implements AppDao {
 		entityManager.createNativeQuery("TRUNCATE TABLE " + tableName).executeUpdate();
 	}
 
+	@Override
+	@Transactional
+	public <T> T update(T entity) {
+		entityManager.merge(entity);
+		return entity;
+	}
+
 }

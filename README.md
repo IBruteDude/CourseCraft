@@ -45,7 +45,13 @@ An Online learning platform
      ./mvnw clean spring-boot:run
     ```
 
-## API Reference (Partially implemented)
+## Swagger API documentation
+
+```http
+ http://localhost:8080/swagger-ui/index.html?url=/v2/api-docs#/
+```
+
+## API Specfication (Partially implemented)
 
 ### HTML Page views
 

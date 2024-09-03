@@ -3,16 +3,16 @@ package com.coursecraft.dto;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Setter
-@Getter
 @AllArgsConstructor
 public class LoginDto {
 
     @NotNull
     @NotEmpty
     @Email
-    private String email;
+    public String email;
 
-    private String password;
+    @NotNull
+    @NotEmpty
+    public String password;
 
 }

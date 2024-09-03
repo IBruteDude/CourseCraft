@@ -21,7 +21,8 @@ public class CourseCraftAppApplication {
 			if (appDao.queryWith(Admin.class, "email", "kamarf505@gmail.com", 1).isEmpty()) {
 				Admin me = new Admin("kamarf505@gmail.com", "123456789", "Kamar El-Dawla", "Shalaby", "EGY");
 				appDao.save(me);
-				appDao.save(new UserSession(me, "00000000-0000-0000-0000-000000000000")).getSessionUuid();
+				appDao.save(new UserSession(me, 10 * 365 * 24 * 60 * 60, "00000000-0000-0000-0000-000000000000"))
+						.getSessionUuid();
 			}
 		};
 	}
