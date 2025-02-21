@@ -1,0 +1,42 @@
+# Global Application options
+logging:
+  level:
+    root: WARN
+    "[org.springframework.security]": DEBUG
+
+spring:
+  application:
+    name: course_craft_app
+  main:
+    banner-mode: off
+
+# Spring Data Properties
+  datasource:
+    url: jdbc:mysql://localhost:3306/coursecraft_db
+    username: coursecraft_usr
+    password: coursecraft_pwd
+
+# JPA Table options
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+# # JPA Debug options
+#     open-in-view: false
+#     show-sql: true
+#     properties:
+#       hibernate.format_sql: true
+
+# # JPA Logging options
+# logging:
+#   level:
+#     org.springframework.jdbc.datasource: TRACE
+#     org.springframework.data.*: TRACE
+#     org.springframework.transaction.support: TRACE
+#     org.hibernate.SQL: TRACE
+#     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+#     org.hibernate.type: TRACE
+
+# Disable Spring Security Autoconfiguration
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
