@@ -2,34 +2,32 @@ package com.coursecraft.entity;
 
 import java.util.Set;
 
-import com.coursecraft.dto.SignupDto;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.util.HashSet;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
+import com.coursecraft.constant.Authority;
 
 @Entity
 @Table(name = "student")
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class Student extends User {
 
-	public Student(String email, String password, String firstName, String lastName, String country) {
-		super(email, password, firstName, lastName, country);
-		role = User.Role.STUDENT;
-	}
-
-	public Student(SignupDto signupDto) {
-		super(signupDto);
-		role = User.Role.STUDENT;
+	public Authority getAuthority() {
+		return Authority.STUDENT;
 	}
 
 	@ManyToMany
 	@JoinTable(name = "student_course", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-	private Set<Course> courses = new HashSet<>();
+	@Builder.Default
+	private Set<Course> courses = Set.of();
+
+	// TODO: add a field for the Cart entity
 
 }

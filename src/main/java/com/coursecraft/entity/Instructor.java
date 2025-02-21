@@ -2,27 +2,25 @@ package com.coursecraft.entity;
 
 import java.util.Set;
 
-import com.coursecraft.dto.SignupDto;
+import com.coursecraft.constant.Authority;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "instructor")
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class Instructor extends User {
 
-	public Instructor(String email, String password, String firstName, String lastName, String country) {
-		super(email, password, firstName, lastName, country);
-		role = User.Role.INSTRUCTOR;
-	}
-
-	public Instructor(SignupDto signupDto) {
-		super(signupDto);
-		role = User.Role.INSTRUCTOR;
+	public Authority getAuthority() {
+		return Authority.INSTRUCTOR;
 	}
 
 	@OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval = true)

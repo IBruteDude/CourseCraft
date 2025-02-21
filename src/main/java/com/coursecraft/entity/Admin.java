@@ -1,24 +1,23 @@
 package com.coursecraft.entity;
 
-import com.coursecraft.dto.SignupDto;
+import com.coursecraft.constant.Authority;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "admin")
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 public class Admin extends User {
 
-	public Admin(String email, String password, String firstName, String lastName, String country) {
-		super(email, password, firstName, lastName, country);
-		role = User.Role.ADMIN;
-	}
-
-	public Admin(SignupDto signupDto) {
-		super(signupDto);
-		role = User.Role.ADMIN;
+	public Authority getAuthority() {
+		return Authority.ADMIN;
 	}
 
 }
