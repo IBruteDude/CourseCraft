@@ -1,4 +1,4 @@
-package com.coursecraft.entity;
+package com.coursecraft.constant;
 
 public enum Language {
 
